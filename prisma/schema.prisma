@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organizations {
+  id                 String         @id @default(uuid())
+  contact_name       String
+  email              String         @unique
+  postal_code        String
+  address            String
+  latitude           Decimal
+  longitude          Decimal
+  mobile_number      String         @unique
+  password           String
+  created_at         DateTime       @default(now())
+  updated_at         DateTime       @default(now())
+  organization_token RefreshTokens?
+  pets               Pets[]         @relation("organization_pets")
+}
+
+model RefreshTokens {
+  id              String        @id @default(uuid())
+  expires_in      Int
+  organization_id String        @unique
+  organization    Organizations @relation(fields: [organization_id], references: [id])
+  created_at      DateTime      @default(now())
+}
+
+model Pets {
+  id                 String                 @id @default(uuid())
+  name               String
+  description        String
+  age                String
+  energy_level       Int
+  size               String
+  independence_level String
+  environment_type   String
+  pet_images         PetImages[]
+  requirements       AdoptionRequirements[]
+  created_at         DateTime               @default(now())
+  updated_at         DateTime               @default(now())
+  organization_id    String
+  organization       Organizations          @relation(fields: [organization_id], references: [id], name: "organization_pets")
+}
+
+model AdoptionRequirements {
+  id          String  @id @default(uuid())
+  description String
+  pet         Pets?   @relation(fields: [pet_id], references: [id])
+  pet_id      String?
+}
+
+model PetImages {
+  id         String   @id @default(uuid())
+  path       String
+  pet_id     String
+  pet        Pets     @relation(fields: [pet_id], references: [id])
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
