@@ -7,32 +7,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Organizations {
-  id                 String         @id @default(uuid())
+model Organization {
+  id                 String        @id @default(uuid())
   contact_name       String
-  email              String         @unique
+  email              String        @unique
   postal_code        String
   address            String
   latitude           Decimal
   longitude          Decimal
-  mobile_number      String         @unique
+  mobile_number      String        @unique
   password           String
-  created_at         DateTime       @default(now())
-  updated_at         DateTime       @default(now())
-  organization_token RefreshTokens?
-  pets               Pets[]         @relation("organization_pets")
+  created_at         DateTime      @default(now())
+  updated_at         DateTime      @default(now())
+  organization_token RefreshToken?
+  pets               Pet[]         @relation("organization_pets")
+
+  @@map("organizations")
 }
 
-model RefreshTokens {
-  id              String        @id @default(uuid())
+model RefreshToken {
+  id              String       @id @default(uuid())
   expires_in      Int
-  organization_id String        @unique
-  organization    Organizations @relation(fields: [organization_id], references: [id])
-  created_at      DateTime      @default(now())
+  organization_id String       @unique
+  organization    Organization @relation(fields: [organization_id], references: [id])
+  created_at      DateTime     @default(now())
+
+  @@map("refresh_tokens")
 }
 
-model Pets {
-  id                 String                 @id @default(uuid())
+model Pet {
+  id                 String                @id @default(uuid())
   name               String
   description        String
   age                String
@@ -40,26 +44,32 @@ model Pets {
   size               String
   independence_level String
   environment_type   String
-  pet_images         PetImages[]
-  requirements       AdoptionRequirements[]
-  created_at         DateTime               @default(now())
-  updated_at         DateTime               @default(now())
+  pet_images         PetImage[]
+  requirements       AdoptionRequirement[]
+  created_at         DateTime              @default(now())
+  updated_at         DateTime              @default(now())
   organization_id    String
-  organization       Organizations          @relation(fields: [organization_id], references: [id], name: "organization_pets")
+  organization       Organization          @relation(fields: [organization_id], references: [id], name: "organization_pets")
+
+  @@map("pets")
 }
 
-model AdoptionRequirements {
+model AdoptionRequirement {
   id          String  @id @default(uuid())
   description String
-  pet         Pets?   @relation(fields: [pet_id], references: [id])
+  pet         Pet?    @relation(fields: [pet_id], references: [id])
   pet_id      String?
+
+  @@map("adoption_requirements")
 }
 
-model PetImages {
+model PetImage {
   id         String   @id @default(uuid())
   path       String
   pet_id     String
-  pet        Pets     @relation(fields: [pet_id], references: [id])
+  pet        Pet      @relation(fields: [pet_id], references: [id])
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
+
+  @@map("pet_images")
 }

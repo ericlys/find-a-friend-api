@@ -1,5 +1,6 @@
 import { OrganizationsRepository } from '@/repositories/organizations-repository'
-import { Organizations } from '@prisma/client'
+import { Organization } from '@prisma/client'
+import { hash } from 'bcryptjs'
 
 interface CreateOrganizationUseCaseRequest {
   contact_name: string
@@ -13,7 +14,7 @@ interface CreateOrganizationUseCaseRequest {
 }
 
 interface CreateOrganizationUseCaseResponse {
-  organization: Organizations
+  organization: Organization
 }
 
 export class CreateOrganizationUseCase {
@@ -29,6 +30,8 @@ export class CreateOrganizationUseCase {
     mobile_number,
     password,
   }: CreateOrganizationUseCaseRequest): Promise<CreateOrganizationUseCaseResponse> {
+    const password_hash = await hash(password, 6)
+
     const organization = await this.organizationRepository.create({
       contact_name,
       email,
@@ -37,7 +40,7 @@ export class CreateOrganizationUseCase {
       latitude,
       longitude,
       mobile_number,
-      password,
+      password: password_hash,
     })
 
     return { organization }

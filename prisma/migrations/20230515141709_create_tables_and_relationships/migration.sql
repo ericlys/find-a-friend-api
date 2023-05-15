@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "Organizations" (
+CREATE TABLE "organizations" (
     "id" TEXT NOT NULL,
     "contact_name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -12,21 +12,21 @@ CREATE TABLE "Organizations" (
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "Organizations_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "organizations_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "RefreshTokens" (
+CREATE TABLE "refresh_tokens" (
     "id" TEXT NOT NULL,
     "expires_in" INTEGER NOT NULL,
     "organization_id" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "RefreshTokens_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "refresh_tokens_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Pets" (
+CREATE TABLE "pets" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -39,46 +39,46 @@ CREATE TABLE "Pets" (
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "organization_id" TEXT NOT NULL,
 
-    CONSTRAINT "Pets_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "pets_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "AdoptionRequirements" (
+CREATE TABLE "adoption_requirements" (
     "id" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "pet_id" TEXT,
 
-    CONSTRAINT "AdoptionRequirements_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "adoption_requirements_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "PetImages" (
+CREATE TABLE "pet_images" (
     "id" TEXT NOT NULL,
     "path" TEXT NOT NULL,
     "pet_id" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "PetImages_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "pet_images_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Organizations_email_key" ON "Organizations"("email");
+CREATE UNIQUE INDEX "organizations_email_key" ON "organizations"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Organizations_mobile_number_key" ON "Organizations"("mobile_number");
+CREATE UNIQUE INDEX "organizations_mobile_number_key" ON "organizations"("mobile_number");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "RefreshTokens_organization_id_key" ON "RefreshTokens"("organization_id");
+CREATE UNIQUE INDEX "refresh_tokens_organization_id_key" ON "refresh_tokens"("organization_id");
 
 -- AddForeignKey
-ALTER TABLE "RefreshTokens" ADD CONSTRAINT "RefreshTokens_organization_id_fkey" FOREIGN KEY ("organization_id") REFERENCES "Organizations"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "refresh_tokens" ADD CONSTRAINT "refresh_tokens_organization_id_fkey" FOREIGN KEY ("organization_id") REFERENCES "organizations"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Pets" ADD CONSTRAINT "Pets_organization_id_fkey" FOREIGN KEY ("organization_id") REFERENCES "Organizations"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "pets" ADD CONSTRAINT "pets_organization_id_fkey" FOREIGN KEY ("organization_id") REFERENCES "organizations"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "AdoptionRequirements" ADD CONSTRAINT "AdoptionRequirements_pet_id_fkey" FOREIGN KEY ("pet_id") REFERENCES "Pets"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "adoption_requirements" ADD CONSTRAINT "adoption_requirements_pet_id_fkey" FOREIGN KEY ("pet_id") REFERENCES "pets"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "PetImages" ADD CONSTRAINT "PetImages_pet_id_fkey" FOREIGN KEY ("pet_id") REFERENCES "Pets"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "pet_images" ADD CONSTRAINT "pet_images_pet_id_fkey" FOREIGN KEY ("pet_id") REFERENCES "pets"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

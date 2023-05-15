@@ -13,8 +13,8 @@ describe('Create Organization Use Case', () => {
 
   it('should be able to create organization', async () => {
     const { organization } = await sut.execute({
-      contact_name: 'Nome do Contato',
-      email: 'exemplo@email.com',
+      contact_name: 'PetShop1',
+      email: 'petshop@example.com',
       postal_code: '12345-678',
       address: 'Endereço do PetShop',
       latitude: -6.88625,
