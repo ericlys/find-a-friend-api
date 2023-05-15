@@ -35,15 +35,33 @@ model RefreshToken {
   @@map("refresh_tokens")
 }
 
+enum AnimalSize {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+enum IndependenceLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum EnvironmentType {
+  INDOOR
+  OUTDOOR
+  SPACIOUS
+}
+
 model Pet {
   id                 String                @id @default(uuid())
   name               String
   description        String
-  age                String
+  age                Int
   energy_level       Int
-  size               String
-  independence_level String
-  environment_type   String
+  size               AnimalSize
+  independence_level IndependenceLevel
+  environment_type   EnvironmentType
   pet_images         PetImage[]
   requirements       AdoptionRequirement[]
   created_at         DateTime              @default(now())
