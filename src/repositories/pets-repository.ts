@@ -10,5 +10,6 @@ export interface findManyByQueryParams {
 
 export interface PetsRepository {
   create(data: Prisma.PetUncheckedCreateInput): Promise<Pet>
+  findById(id: String): Promise<Pet | null>
   findManyByQuery(params: findManyByQueryParams): Promise<Pet[]>
 }
