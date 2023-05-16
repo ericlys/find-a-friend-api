@@ -1,15 +1,21 @@
-import { Organization, Pet, Prisma } from '@prisma/client'
+import {
+  AnimalSize,
+  IndependenceLevel,
+  Organization,
+  Pet,
+  Prisma,
+} from '@prisma/client'
 
 export interface findManyByQueryParams {
   orgs: Organization[]
   age?: number
   energy?: number
-  size?: string
-  independence?: string
+  size?: AnimalSize
+  independence?: IndependenceLevel
 }
 
 export interface PetsRepository {
   create(data: Prisma.PetUncheckedCreateInput): Promise<Pet>
-  findById(id: String): Promise<Pet | null>
+  findById(id: string): Promise<Pet | null>
   findManyByQuery(params: findManyByQueryParams): Promise<Pet[]>
 }
