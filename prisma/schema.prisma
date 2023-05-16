@@ -11,12 +11,14 @@ model Organization {
   id                 String        @id @default(uuid())
   contact_name       String
   email              String        @unique
-  postal_code        String
-  address            String
-  latitude           Decimal
-  longitude          Decimal
   mobile_number      String        @unique
   password           String
+  street             String
+  city               String
+  state              String
+  postal_code        String
+  latitude           Decimal
+  longitude          Decimal
   created_at         DateTime      @default(now())
   updated_at         DateTime      @default(now())
   organization_token RefreshToken?

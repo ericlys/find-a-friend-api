@@ -7,7 +7,9 @@ interface CreateOrganizationUseCaseRequest {
   contact_name: string
   email: string
   postal_code: string
-  address: string
+  street: string
+  city: string
+  state: string
   latitude: number
   longitude: number
   mobile_number: string
@@ -25,7 +27,9 @@ export class CreateOrganizationUseCase {
     contact_name,
     email,
     postal_code,
-    address,
+    street,
+    city,
+    state,
     latitude,
     longitude,
     mobile_number,
@@ -43,12 +47,14 @@ export class CreateOrganizationUseCase {
     const organization = await this.organizationRepository.create({
       contact_name,
       email,
-      postal_code,
-      address,
-      latitude,
-      longitude,
       mobile_number,
       password: password_hash,
+      street,
+      city,
+      state,
+      postal_code,
+      latitude,
+      longitude,
     })
 
     return { organization }

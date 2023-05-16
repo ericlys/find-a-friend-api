@@ -18,12 +18,16 @@ describe('Create Organization Use Case', () => {
       contact_name: 'PetShop1',
       email: 'petshop@example.com',
       postal_code: '12345-678',
-      address: 'Endereço do PetShop',
+      city: 'São Paulo',
+      state: 'SP',
+      street: 'rua do meio',
       latitude: -6.88625,
       longitude: -38.54824,
       mobile_number: '(99) 99999-9999',
       password: 'pass123',
     })
+
+    console.log(organization)
 
     expect(organization.id).toEqual(expect.any(String))
   })
@@ -33,7 +37,9 @@ describe('Create Organization Use Case', () => {
       contact_name: 'PetShop1',
       email: 'petshop@example.com',
       postal_code: '12345-678',
-      address: 'Endereço do PetShop',
+      city: 'São Paulo',
+      state: 'SP',
+      street: 'rua do meio',
       latitude: -6.88625,
       longitude: -38.54824,
       mobile_number: '(99) 99999-9999',
@@ -55,7 +61,9 @@ describe('Create Organization Use Case', () => {
       contact_name: 'PetShop1',
       email,
       postal_code: '12345-678',
-      address: 'Endereço do PetShop',
+      city: 'São Paulo',
+      state: 'SP',
+      street: 'rua do meio',
       latitude: -6.88625,
       longitude: -38.54824,
       mobile_number: '(99) 99999-9999',
@@ -64,10 +72,12 @@ describe('Create Organization Use Case', () => {
 
     await expect(() =>
       sut.execute({
-        contact_name: 'PetShop1',
+        contact_name: 'PetShop2',
         email,
         postal_code: '12345-678',
-        address: 'Endereço do PetShop',
+        city: 'São Paulo',
+        state: 'SP',
+        street: 'rua do meio',
         latitude: -6.88625,
         longitude: -38.54824,
         mobile_number: '(99) 99999-9999',
