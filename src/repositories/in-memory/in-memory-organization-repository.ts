@@ -1,5 +1,8 @@
 import { Prisma, Organization } from '@prisma/client'
-import { OrganizationsRepository } from '../organizations-repository'
+import {
+  FindManyByLocationParams,
+  OrganizationsRepository,
+} from '../organizations-repository'
 import { randomUUID } from 'crypto'
 
 export class InMemoryOrganizationRepository implements OrganizationsRepository {
@@ -41,5 +44,17 @@ export class InMemoryOrganizationRepository implements OrganizationsRepository {
     )
 
     return organization ?? null
+  }
+
+  async findByLocation({
+    city,
+    state,
+  }: FindManyByLocationParams): Promise<Organization[] | null> {
+    const organizations = this.items.filter(
+      (organization) =>
+        organization.city === city && organization.state === state,
+    )
+
+    return organizations ?? null
   }
 }

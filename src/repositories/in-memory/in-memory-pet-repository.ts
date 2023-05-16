@@ -1,5 +1,5 @@
 import { Prisma, Pet } from '@prisma/client'
-import { PetsRepository } from '../pets-repository'
+import { PetsRepository, findManyByQueryParams } from '../pets-repository'
 import { randomUUID } from 'crypto'
 
 export class InMemoryPetRepository implements PetsRepository {
@@ -23,5 +23,27 @@ export class InMemoryPetRepository implements PetsRepository {
     this.items.push(pet)
 
     return pet
+  }
+
+  async findManyByQuery({
+    orgs,
+    age,
+    energy,
+    independence,
+    size,
+  }: findManyByQueryParams): Promise<Pet[]> {
+    const orgsIds = orgs.map((org) => org.id)
+
+    const pets = this.items.filter((pet) => {
+      return (
+        orgsIds.includes(pet.organization_id) &&
+        (!age || pet.age === age) &&
+        (!energy || pet.energy_level === energy) &&
+        (!independence || pet.independence_level === independence) &&
+        (!size || pet.size === size)
+      )
+    })
+
+    return pets
   }
 }
