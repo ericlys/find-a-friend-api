@@ -8,6 +8,8 @@ import {
 
 export interface findManyByQueryParams {
   orgs: Organization[]
+  page: number
+  amount: number
   age?: number
   energy?: number
   size?: AnimalSize

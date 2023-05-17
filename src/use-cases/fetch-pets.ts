@@ -6,6 +6,8 @@ import { ResourceNotFoundError } from './erros/resource-not-found-error'
 interface FetchPetsUseCaseRequest {
   city: string
   state: string
+  page: number
+  amount: number
   age?: number
   energy?: number
   size?: AnimalSize
@@ -25,6 +27,8 @@ export class FetchPetsUseCase {
   async execute({
     city,
     state,
+    page,
+    amount,
     age,
     energy,
     independence,
@@ -41,6 +45,8 @@ export class FetchPetsUseCase {
 
     const pets = await this.petsRepository.findManyByQuery({
       orgs: organizations,
+      page,
+      amount,
       age,
       energy,
       size,

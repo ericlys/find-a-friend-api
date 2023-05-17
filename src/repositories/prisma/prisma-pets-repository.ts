@@ -23,6 +23,8 @@ export class PrismaPetsRepository implements PetsRepository {
 
   async findManyByQuery({
     orgs,
+    page,
+    amount,
     age,
     energy,
     independence,
@@ -40,6 +42,8 @@ export class PrismaPetsRepository implements PetsRepository {
         ...(independence && { independence_level: independence }),
         ...(size && { size }),
       },
+      take: amount,
+      skip: (page - 1) * amount,
     })
 
     return pets

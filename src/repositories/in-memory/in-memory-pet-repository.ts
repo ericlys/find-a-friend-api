@@ -27,6 +27,8 @@ export class InMemoryPetRepository implements PetsRepository {
 
   async findManyByQuery({
     orgs,
+    page,
+    amount,
     age,
     energy,
     independence,
@@ -44,7 +46,7 @@ export class InMemoryPetRepository implements PetsRepository {
       )
     })
 
-    return pets
+    return pets.slice((page - 1) * amount, page * amount)
   }
 
   async findById(id: String): Promise<Pet | null> {

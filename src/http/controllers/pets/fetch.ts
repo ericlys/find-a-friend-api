@@ -7,6 +7,8 @@ export async function Fetch(request: FastifyRequest, reply: FastifyReply) {
   const fetchQuerySchema = z.object({
     city: z.string(),
     state: z.string(),
+    page: z.coerce.number().default(1),
+    amount: z.coerce.number().default(10),
     age: z.coerce.number().optional(),
     energy: z.coerce.number().optional(),
     independence: z.enum(['LOW', 'HIGH', 'MEDIUM']).optional(),
