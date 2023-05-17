@@ -2,7 +2,7 @@ import { InMemoryOrganizationRepository } from '@/repositories/in-memory/in-memo
 import { beforeEach, describe, expect, it } from 'vitest'
 import { CreateOrganizationUseCase } from './create-organization'
 import { compare } from 'bcryptjs'
-import { OrganizationAlreadyExists } from './erros/organization-already-exists-error'
+import { OrganizationAlreadyExistsError } from './erros/organization-already-exists-error'
 
 let organizationsRepository: InMemoryOrganizationRepository
 let sut: CreateOrganizationUseCase
@@ -26,8 +26,6 @@ describe('Create Organization Use Case', () => {
       mobile_number: '(99) 99999-9999',
       password: 'pass123',
     })
-
-    console.log(organization)
 
     expect(organization.id).toEqual(expect.any(String))
   })
@@ -83,6 +81,6 @@ describe('Create Organization Use Case', () => {
         mobile_number: '(99) 99999-9999',
         password: 'pass123',
       }),
-    ).rejects.toBeInstanceOf(OrganizationAlreadyExists)
+    ).rejects.toBeInstanceOf(OrganizationAlreadyExistsError)
   })
 })

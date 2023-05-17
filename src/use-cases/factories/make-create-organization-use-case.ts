@@ -3,9 +3,7 @@ import { CreateOrganizationUseCase } from '../create-organization'
 
 export function makeCreateOrganizationUseCase() {
   const prismaOrganizationRespository = new PrismaOrganizationRespository()
-  const createOrganizationUseCase = new CreateOrganizationUseCase(
-    prismaOrganizationRespository,
-  )
+  const useCase = new CreateOrganizationUseCase(prismaOrganizationRespository)
 
-  return createOrganizationUseCase
+  return useCase
 }

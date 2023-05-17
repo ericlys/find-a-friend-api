@@ -6,10 +6,10 @@ export function makeFetchPetsUseCase() {
   const prismaPetsRepository = new PrismaPetsRepository()
   const prismaOrganizationRespository = new PrismaOrganizationRespository()
 
-  const fetchPetsUseCase = new FetchPetsUseCase(
+  const useCase = new FetchPetsUseCase(
     prismaPetsRepository,
     prismaOrganizationRespository,
   )
 
-  return fetchPetsUseCase
+  return useCase
 }

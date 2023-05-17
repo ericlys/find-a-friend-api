@@ -1,15 +1,15 @@
 import { OrganizationsRepository } from '@/repositories/organizations-repository'
 import { PetsRepository } from '@/repositories/pets-repository'
-import { Pet } from '@prisma/client'
-import { ResourceNotFound } from './erros/resource-not-found-error'
+import { AnimalSize, IndependenceLevel, Pet } from '@prisma/client'
+import { ResourceNotFoundError } from './erros/resource-not-found-error'
 
 interface FetchPetsUseCaseRequest {
   city: string
   state: string
   age?: number
   energy?: number
-  size?: string
-  independence?: string
+  size?: AnimalSize
+  independence?: IndependenceLevel
 }
 
 interface FetchPetsUseCaseResponse {
@@ -36,7 +36,7 @@ export class FetchPetsUseCase {
     })
 
     if (!organizations) {
-      throw new ResourceNotFound()
+      throw new ResourceNotFoundError()
     }
 
     const pets = await this.petsRepository.findManyByQuery({

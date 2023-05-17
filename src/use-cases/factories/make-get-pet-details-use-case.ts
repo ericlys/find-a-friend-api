@@ -3,7 +3,7 @@ import { GetPetDetailsUseCase } from '../get-pet-details'
 
 export function makeGetPetDetailsUseCase() {
   const prismaPetsRepository = new PrismaPetsRepository()
-  const getPetDetailsUseCase = new GetPetDetailsUseCase(prismaPetsRepository)
+  const useCase = new GetPetDetailsUseCase(prismaPetsRepository)
 
-  return getPetDetailsUseCase
+  return useCase
 }
