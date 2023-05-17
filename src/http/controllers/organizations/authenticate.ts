@@ -1,5 +1,7 @@
+import { prisma } from '@/lib/prisma'
 import { InvalidCredentialsError } from '@/use-cases/erros/invalid-credentials-error'
 import { makeAuthenticateUseCase } from '@/use-cases/factories/make-authenticate-use-case'
+import dayjs from 'dayjs'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
@@ -35,6 +37,28 @@ export async function authenticate(
         },
       },
     )
+
+    const oldRefreshToken = await prisma.refreshToken.findFirst({
+      where: {
+        organization_id: organization.id,
+      },
+    })
+
+    if (oldRefreshToken?.id) {
+      await prisma.refreshToken.delete({
+        where: {
+          id: oldRefreshToken.id,
+        },
+      })
+    }
+
+    await prisma.refreshToken.create({
+      data: {
+        id: refreshToken,
+        expires_in: dayjs().add(7, 'd').unix(),
+        organization_id: organization.id,
+      },
+    })
 
     return reply
       .setCookie('refreshToken', refreshToken, {
