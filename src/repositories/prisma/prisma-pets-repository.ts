@@ -16,6 +16,14 @@ export class PrismaPetsRepository implements PetsRepository {
       where: {
         id,
       },
+      include: {
+        pet_images: {
+          select: {
+            id: true,
+            path: true,
+          },
+        },
+      },
     })
 
     return pet
@@ -41,6 +49,9 @@ export class PrismaPetsRepository implements PetsRepository {
         ...(energy && { energy_level: energy }),
         ...(independence && { independence_level: independence }),
         ...(size && { size }),
+      },
+      include: {
+        pet_images: true,
       },
       take: amount,
       skip: (page - 1) * amount,

@@ -23,4 +23,12 @@ export class DiskStorage {
 
     await fs.promises.unlink(filePath)
   }
+
+  async listFiles() {
+    try {
+      return fs
+        .readdirSync(UPLOADS_FOLDER)
+        .filter((file) => file !== '.gitkeep')
+    } catch {}
+  }
 }
