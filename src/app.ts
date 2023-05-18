@@ -5,6 +5,9 @@ import fastifyJwt from '@fastify/jwt'
 import { organizationsRoutes } from './http/controllers/organizations/routes'
 import fastifyCookie from '@fastify/cookie'
 import { petsRouters } from './http/controllers/pets/routes'
+import multer from 'fastify-multer'
+import fastifyStatic from '@fastify/static'
+import { UPLOADS_FOLDER } from './configs/upload'
 
 export const app = fastify()
 
@@ -20,6 +23,13 @@ app.register(fastifyJwt, {
 })
 
 app.register(fastifyCookie)
+
+app.register(multer.contentParser)
+
+app.register(fastifyStatic, {
+  root: UPLOADS_FOLDER,
+  prefix: '/images',
+})
 
 app.register(organizationsRoutes)
 app.register(petsRouters)
